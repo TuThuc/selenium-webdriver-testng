@@ -1,5 +1,9 @@
 package webdriver;
 
 public class Topic_02_Xpath_Css {
-int n;
+
+public void search () {
+	String xpath;
+
+}
 }
