@@ -38,7 +38,7 @@ public class Topic_10_Alert {
 		Assert.assertEquals(driver.findElement(By.cssSelector("p#result")).getText(), "You clicked an alert successfully");
 	}
 
-	@Test
+	//@Test
 	public void TC_02_Confirm_Alert() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		driver.findElement(By.xpath("//button[text()='Click for JS Confirm']")).click();
@@ -52,7 +52,7 @@ public class Topic_10_Alert {
 		Assert.assertEquals(driver.findElement(By.cssSelector("p#result")).getText(), "You clicked: Cancel");
 
 	}
-	@Test
+	//@Test
 	public void TC_03_Prompt_Alert() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		String textToSendkey = "Automation FC";
@@ -68,9 +68,30 @@ public class Topic_10_Alert {
 		Assert.assertEquals(driver.findElement(By.cssSelector("p#result")).getText(), "You entered: "+ textToSendkey);
 
 	}
+	//@Test
+	public void TC_04_Authentication_Alert_I() {
+		String username = "admin";
+		String password = "admin";
+		driver.get("http://" + username +":" +password + "@"+"the-internet.herokuapp.com/basic_auth");
+		sleepInSecond(3);
+	    Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
+	}
 	@Test
-	public void TC_04_Prompt_Alert() {
+	public void TC_04_Authentication_Alert_II() {
+		String username = "admin";
+		String password = "admin";
+		driver.get("http://the-internet.herokuapp.com");
+		String basicAuthenLink = driver.findElement(By.xpath("//a[text()='Basic Auth']")).getAttribute("href");
 		
+		driver.get(getAuthenticateLink(basicAuthenLink, username, password));
+		sleepInSecond(3);
+	    Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
+	}
+	
+	public String getAuthenticateLink(String url , String username, String password) {
+		String[] links = url.split("//");
+		url = links[0] + "//" + username + ":" + password + "@" + links[1];
+		return url;
 	}
 	@AfterClass
 	public void afterClass() {
