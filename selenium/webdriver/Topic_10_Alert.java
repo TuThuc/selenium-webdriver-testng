@@ -68,7 +68,10 @@ public class Topic_10_Alert {
 		Assert.assertEquals(driver.findElement(By.cssSelector("p#result")).getText(), "You entered: "+ textToSendkey);
 
 	}
-
+	@Test
+	public void TC_04_Prompt_Alert() {
+		
+	}
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
