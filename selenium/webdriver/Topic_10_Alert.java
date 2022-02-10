@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -24,8 +24,8 @@ public class Topic_10_Alert {
 	String authenFirefox = projectPath + "\\autoITScript\\authen_firefox.exe";
 	@BeforeClass
 	public void beforeClass() {
-		System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
-		driver = new FirefoxDriver();
+		System.setProperty("webdriver.chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
+		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	
 	}
@@ -102,7 +102,8 @@ public class Topic_10_Alert {
 		driver.get("http://the-internet.herokuapp.com");
 		//Script sẽ chạy trước để chờ authen alert chạy sau
 		if(driver.toString().contains("Firefox")){
-		Runtime.getRuntime().exec(new String[] { authenFirefox,username,password});
+		// inject/call excutable file
+			Runtime.getRuntime().exec(new String[] { authenFirefox,username,password});
 		} else {
 		Runtime.getRuntime().exec(new String[] { authenChrome,username,password});	
 		}
