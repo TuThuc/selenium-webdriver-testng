@@ -21,12 +21,13 @@ public class Topic_14_Frame_Iframe {
 	}
 
 	@Test
-	public void TC_01() {
-		
+	public void TC_01_Iframe() {
+	driver.get("https://kyna.vn/");	
+	
 	}
 
 	@Test
-	public void TC_02() {
+	public void TC_02_Frame() {
 		
 	}
 
