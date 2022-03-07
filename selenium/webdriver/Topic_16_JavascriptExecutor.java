@@ -187,6 +187,10 @@ sleepInSecond(3);
 					sleepInSecond(3);
 					Assert.assertEquals(getElementValidationMessage("//input[@id='lastName']"),"Please fill out this field.");
 		}	
+		@Test
+		public void TC_06_Creat_Acount_By_Jsexecutor() {
+			driver.get("http://live.techpanda.org/");
+		}
 		public String getInnerText() {
 		return (String) jsExecutor.executeScript("return document.documentElement.innerText;");
 	}
