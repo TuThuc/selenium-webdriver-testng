@@ -14,7 +14,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_19_Upload_AutoIT_Robot {
+public class Topic_19_Upload_AutoIT {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 	 String separatorChar = File.separator;
@@ -72,12 +72,12 @@ Runtime.getRuntime().exec(new String[] {singleFirefox,test2Image});
 				//Load File
 				Runtime.getRuntime().exec(new String[] {multipleFirefox,test1Location,test2Location});
 				
-				sleepInSecond(3);
+				sleepInSecond(8);
 			//Upload
 				List<WebElement> startButtons = driver.findElements(By.xpath("//span[text()='Start']"));
 				for (WebElement start : startButtons) {
 					start.click();
-					sleepInSecond(3);
+					sleepInSecond(1);
 				}
 				//Verify
 				Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[@title='"+ test1Image +"']")).isDisplayed());
