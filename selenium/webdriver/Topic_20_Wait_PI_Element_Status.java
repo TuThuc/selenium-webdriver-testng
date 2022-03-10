@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -46,22 +47,39 @@ public class Topic_20_Wait_PI_Element_Status {
 	}
 
 		@Test
-		public void TC_03_Invisible_Not_In_DOM() {	
+		public void TC_02_Invisible_Not_In_DOM() {	
 			//Invisible: Không có trên UI và không có trong DOM(K bắt buộc)
 			driver.findElement(By.xpath("//div[text()='Sign Up']/parent::div/preceding-sibling::img")).click();
 			sleepInSecond(2);
 			//chạy mất 15s
-			expliciWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@name= 'reg_email_confirmation__']")));
+			expliciWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("driver.findElement(By.xpath(\"//a[@data-testid='open-registration-form-button']\")).click();\r\n"
+					+ "		sleepInSecond(2);")));
 			//Khong hien thi->Fail ->20s
 			Assert.assertFalse(driver.findElement(By.xpath("//input[@name= 'reg_email_confirmation__']")).isDisplayed());
 		}
 	@Test
 	public void TC_03_Presence() {
+		//Presence:  có trong DOM/ HTML và có trên UI->Pass
+		expliciWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='email']")));
+		
+		driver.findElement(By.xpath("//a[@data-testid='open-registration-form-button']")).click();
+		sleepInSecond(2);
+		//Presence: K co trong DOM/HTML va k co tren UI-->Pass
+		expliciWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@name= 'reg_email_confirmation__']")));
 		
 	}
 	@Test
 	public void TC_04_Staleness() {
-		
+		driver.findElement(By.xpath("//a[@data-testid='open-registration-form-button']")).click();
+		sleepInSecond(2);
+		// tai thoi diem nay element nay dang co trong DOM
+		WebElement confirmationEmailTextbox = driver.findElement(By.xpath("//input[@name= 'reg_email_confirmation__]"));
+		//Dong Registration form lai
+		driver.findElement(By.xpath("//div[text()='Sign Up']/parent::div/preceding-sibling::img")).click();
+		sleepInSecond(2);
+		//Wait cho confirmation Email Adreess textbox khong con trong DOM nua
+		//Vi 1 li do nao do minh wait cho no khong ton tai trong DOm nua
+		expliciWait.until(ExpectedConditions.stalenessOf(confirmationEmailTextbox));
 	}
 
 	@AfterClass
