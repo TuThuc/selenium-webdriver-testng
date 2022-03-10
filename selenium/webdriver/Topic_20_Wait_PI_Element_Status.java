@@ -37,13 +37,24 @@ public class Topic_20_Wait_PI_Element_Status {
 
 	@Test
 	public void TC_02_Invisible_In_DOM() {
+		driver.findElement(By.xpath("//a[@data-testid='open-registration-form-button']")).click();
 		//Invisible: Không có trên UI và có trong DOM(K bắt buộc)
-		//Ket qua như nhau nhưng thời gian chạy khác nhau 
+		//Ket qua như nhau nhưng thời gian chạy moi case khác nhau 
+		expliciWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@name= 'reg_email_confirmation__']")));
+		//Khong hien thi->Pass ~1s
+		Assert.assertFalse(driver.findElement(By.xpath("//input[@name= 'reg_email_confirmation__']")).isDisplayed());
 	}
 
 		@Test
 		public void TC_03_Invisible_Not_In_DOM() {	
-	}
+			//Invisible: Không có trên UI và không có trong DOM(K bắt buộc)
+			driver.findElement(By.xpath("//div[text()='Sign Up']/parent::div/preceding-sibling::img")).click();
+			sleepInSecond(2);
+			//chạy mất 15s
+			expliciWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@name= 'reg_email_confirmation__']")));
+			//Khong hien thi->Fail ->20s
+			Assert.assertFalse(driver.findElement(By.xpath("//input[@name= 'reg_email_confirmation__']")).isDisplayed());
+		}
 	@Test
 	public void TC_03_Presence() {
 		
