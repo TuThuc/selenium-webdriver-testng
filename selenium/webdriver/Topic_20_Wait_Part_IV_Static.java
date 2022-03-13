@@ -1,6 +1,5 @@
 package webdriver;
 
-
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -11,7 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_20_Wait_Part_III_Implicit {
+public class Topic_20_Wait_Part_IV_Static {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 
@@ -19,47 +18,45 @@ public class Topic_20_Wait_Part_III_Implicit {
 	public void beforeClass() {
 		System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
 		driver = new FirefoxDriver();
-		
-		
+
 	}
 
-@Test
-	public void TC_01() {
-	driver.get("https://automationfc.github.io/dynamic-loading/");
-	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	@Test
+	public void TC_01_Equal() throws InterruptedException {
+		driver.get("https://automationfc.github.io/dynamic-loading/");
+
 		driver.findElement(By.xpath("//button[text()='Start']")).click();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		// Loading icon bien mat
+		Thread.sleep(5000);
 
 		Assert.assertEquals(driver.findElement(By.xpath("//h4[text()='Hello World!']")).getText(), "Hello World!");
 	}
 
-@Test
-public void TC_02() {
-driver.get("https://automationfc.github.io/dynamic-loading/");
-driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-	driver.findElement(By.xpath("//button[text()='Start']")).click();
-	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	@Test
+	public void TC_02_Less() throws InterruptedException {
+		driver.get("https://automationfc.github.io/dynamic-loading/");
+//2s khong du de loading icon bien mat
+		driver.findElement(By.xpath("//button[text()='Start']")).click();
+		Thread.sleep(2000);
 
-	Assert.assertEquals(driver.findElement(By.xpath("//h4[text()='Hello World!']")).getText(), "Hello World!");
-}
-@Test
-public void TC_03() {
-driver.get("https://automationfc.github.io/dynamic-loading/");
+		Assert.assertEquals(driver.findElement(By.xpath("//h4[text()='Hello World!']")).getText(), "Hello World!");
+	}
 
-	driver.findElement(By.xpath("//button[text()='Start']")).click();
+	@Test
+	public void TC_03_Greater() throws InterruptedException {
+		driver.get("https://automationfc.github .io/dynamic-loading/");
 
-	Assert.assertEquals(driver.findElement(By.xpath("//h4[text()='Hello World!']")).getText(), "Hello World!");
-}
+		driver.findElement(By.xpath("//button[text()='Start']")).click();
+		// 10s due loading icon bien mat= du 5s
+		Thread.sleep(10000);
 
+		Assert.assertEquals(driver.findElement(By.xpath("//h4[text()='Hello World!']")).getText(), "Hello World!");
+	}
 
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
 	}
-
-	
-
-
 
 	public void sleepInSecond(long second) {
 		try {

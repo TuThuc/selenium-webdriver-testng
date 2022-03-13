@@ -88,7 +88,7 @@ public class Topic_20_Wait_PI_Element_Status {
 	}
 	public void sleepInSecond(long second) {
 		try {
-			Thread.sleep(second*1000);
+			Thread.sleep(second*1000); 
 		}
 		catch (InterruptedException e) {
 			
