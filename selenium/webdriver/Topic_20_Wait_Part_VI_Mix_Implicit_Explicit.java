@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -53,7 +54,7 @@ public class Topic_20_Wait_Part_VI_Mix_Implicit_Explicit {
 			System.out.println("End implicit" + getTimeNow());
 		}
 			//@Test
-			public void TC_03_Element_Not_Found_Only_Explicit() {
+			public void TC_03_Element_Not_Found_Only_Explicit_By() {
 				driver.get("https://www.facebook.com/");
 				By emailIDBy = By.id("emailc");
 				
@@ -69,28 +70,41 @@ public class Topic_20_Wait_Part_VI_Mix_Implicit_Explicit {
 
 				System.out.println("End explicit" + getTimeNow());
 			}
-			@Test
+		//	@Test
 			public void TC_04_Element_Not_Found_Implicit_Explicit() {
 				driver.get("https://www.facebook.com/");
 				By emailIDBy = By.id("emailc");
 				// 1 - Implicit <Explicit
 				// 1 - Implicit = Explicit
 				// 1 - Implicit >Explicit
-				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-				System.out.println("Start implicit" + getTimeNow());
-				try {
-					driver.findElement(emailIDBy).isDisplayed();
-				} catch (Exception e1) {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				
-				}
-				System.out.println("End implicit" + getTimeNow());
-				explicitWait = new WebDriverWait(driver, 10);
+				
+				explicitWait = new WebDriverWait(driver, 5);
 				
 				System.out.println("Start explicit" + getTimeNow());
 				try {
 					explicitWait.until(ExpectedConditions.visibilityOfElementLocated(emailIDBy));
 				} catch (Exception e) {
 				
+				}
+
+				System.out.println("End explicit" + getTimeNow());
+				
+			}
+			@Test
+			public void TC_05_Element_Not_Found_Only_Explicit_WebElement() {
+				driver.get("https://www.facebook.com/");
+				WebElement  emailIDBy = driver.findElement(By.id("emailc"));
+				
+				explicitWait = new WebDriverWait(driver, 15);
+				
+				System.out.println("Start explicit" + getTimeNow());
+				try {
+					explicitWait.until(ExpectedConditions.visibilityOf(emailIDBy));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					
 				}
 
 				System.out.println("End explicit" + getTimeNow());
