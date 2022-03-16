@@ -119,6 +119,8 @@ public class Topic_20_Wait_Part_V_Explicit {
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='01.mp4']/parent::a/parent::div/following-sibling::div//span[text()='Download']")));
 Assert.assertTrue(driver.findElement(By.xpath("//span[text()='01.mp4']/parent::a/parent::div/following-sibling::div//span[text()='Download']")).isDisplayed());
 Assert.assertTrue(driver.findElement(By.xpath("//span[text()='02.mp4']/parent::a/parent::div/following-sibling::div//span[text()='Download']")).isDisplayed());
+Assert.assertTrue(driver.findElement(By.xpath("//span[text()='03.mp4']/parent::a/parent::div/following-sibling::div//span[text()='Download']")).isDisplayed());
+
 
 	}
 
