@@ -2,14 +2,16 @@ package webdriver;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
+
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -41,15 +43,38 @@ public class Topic_20_Wait_PVII_Fluent {
 				// Polling time: lặp lại để tìm điều kiện nếu chưa thỏa mãn
 				.pollingEvery(Duration.ofSeconds(1))
 				// Nếu gặp exception là find khong thấy element sẽ bỏ qua
-				.ignoring(NoSuchElementException.class);
+				.ignoring(NoSuchElementException.class)
        // Điều kiện của Fluent Wait
-		WebElement feelingLuckyButton = (WebElement) fluentDriver.until(new Function<WebDriver, WebElement>() {
+		.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
-				return driver.findElement(By.xpath(""));
+				return driver.findElement(By.xpath("//input[@name='btnI-fail']"));
 			}
 		});
+		//Setting time
+		WebElement loginButton = driver.findElement(By.xpath(""));
+		fluentElement = new FluentWait<WebElement>(loginButton);
+		fluentElement.withTimeout(Duration.ofSeconds(60))
+		.pollingEvery(Duration.ofMillis(200))
+		.ignoring(ElementNotVisibleException.class);
+		//Apply điều kiện và trả về dữ liệu String
+		String loginButtonText =fluentElement.until(new Function<WebElement, String>() {
+			public String apply(WebElement element) {
+				
+				return element.getText();
+			}
+		});
+		Assert.assertEquals(loginButton, "");
+	//Apply điều kiện trả về kiểu boolean
+		boolean loginButtonStatus = fluentElement.until(new Function<WebElement, Boolean>() {
+			public Boolean apply(WebElement element) {
+				
+				return element.isDisplayed();
+			}
+		});
+				Assert.assertTrue(loginButtonStatus);
 	}
-
+	
+		
 	@Test
 	public void TC_02() {
 
@@ -68,4 +93,6 @@ public class Topic_20_Wait_PVII_Fluent {
 			e.printStackTrace();
 		}
 	}
-}
+		}
+		
+	
