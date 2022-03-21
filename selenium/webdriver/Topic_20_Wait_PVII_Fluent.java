@@ -35,45 +35,28 @@ public class Topic_20_Wait_PVII_Fluent {
 
 	@Test
 	public void TC_01() {
-		//Find Element với tổng thời gian 15s
-		//Tần số lặp lại để tìm nếu không thấy là 1s/1 lần
-		fluentDriver = new FluentWait<WebDriver>(driver);
-		// Tong thoi gian chờ cho dieu kien
-		fluentDriver.withTimeout(Duration.ofSeconds(15))
-				// Polling time: lặp lại để tìm điều kiện nếu chưa thỏa mãn
-				.pollingEvery(Duration.ofSeconds(1))
-				// Nếu gặp exception là find khong thấy element sẽ bỏ qua
-				.ignoring(NoSuchElementException.class)
-       // Điều kiện của Fluent Wait
-		.until(new Function<WebDriver, WebElement>() {
-			public WebElement apply(WebDriver driver) {
-				return driver.findElement(By.xpath("//input[@name='btnI-fail']"));
-			}
-		});
-		//Setting time
-		WebElement loginButton = driver.findElement(By.xpath(""));
-		fluentElement = new FluentWait<WebElement>(loginButton);
-		fluentElement.withTimeout(Duration.ofSeconds(60))
-		.pollingEvery(Duration.ofMillis(200))
-		.ignoring(ElementNotVisibleException.class);
-		//Apply điều kiện và trả về dữ liệu String
-		String loginButtonText =fluentElement.until(new Function<WebElement, String>() {
-			public String apply(WebElement element) {
-				
-				return element.getText();
-			}
-		});
-		Assert.assertEquals(loginButton, "");
-	//Apply điều kiện trả về kiểu boolean
-		boolean loginButtonStatus = fluentElement.until(new Function<WebElement, Boolean>() {
-			public Boolean apply(WebElement element) {
-				
-				return element.isDisplayed();
-			}
-		});
-				Assert.assertTrue(loginButtonStatus);
-	}
+	driver.get("https://automationfc.github.io/dynamic-loading/");
 	
+	fluentDriver = new  FluentWait<WebDriver>(driver);
+	
+	driver.findElement(By.cssSelector("div#start>button")).click();
+	
+	// Sau khi bấm Loading icon xuất hiện và mất sau 5s
+	// Icon loading biến mất = Helloword xuất hi ện
+	
+	fluentDriver.withTimeout(Duration.ofSeconds(6))
+	.pollingEvery(Duration.ofSeconds(1))
+	.ignoring(NoSuchElementException.class)
+	.until(new Function<WebDriver, String>() { 
+
+		@Override
+		public String apply(WebDriver driver) {
+			String text = driver.findElement(By.cssSelector("div#finish>h4")).getText();
+			System.out.println(text);
+			return text;
+		}
+	}          ); 
+	}
 		
 	@Test
 	public void TC_02() {
