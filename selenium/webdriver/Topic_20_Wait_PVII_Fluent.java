@@ -5,13 +5,14 @@ import java.util.NoSuchElementException;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -24,7 +25,8 @@ public class Topic_20_Wait_PVII_Fluent {
 	WebDriverWait explicitWait;
 	FluentWait<WebDriver> fluentDriver;
 	FluentWait<WebElement> fluentElement;
-
+long pollingtime= 1;
+long sumTime = 30;
 	@BeforeClass
 	public void beforeClass() {
 		System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
@@ -36,26 +38,12 @@ public class Topic_20_Wait_PVII_Fluent {
 	@Test
 	public void TC_01() {
 	driver.get("https://automationfc.github.io/dynamic-loading/");
+	fluentDriver = new FluentWait<WebDriver>(driver);
+	clickToElement(By.cssSelector("div#start>button"));
+	isElementDisplayed(By.cssSelector("div#finish>h4"));
 	
-	fluentDriver = new  FluentWait<WebDriver>(driver);
 	
-	driver.findElement(By.cssSelector("div#start>button")).click();
 	
-	// Sau khi bấm Loading icon xuất hiện và mất sau 5s
-	// Icon loading biến mất = Helloword xuất hi ện
-	
-	fluentDriver.withTimeout(Duration.ofSeconds(6))
-	.pollingEvery(Duration.ofSeconds(1))
-	.ignoring(NoSuchElementException.class)
-	.until(new Function<WebDriver, String>() { 
-
-		@Override
-		public String apply(WebDriver driver) {
-			String text = driver.findElement(By.cssSelector("div#finish>h4")).getText();
-			System.out.println(text);
-			return text;
-		}
-	}          ); 
 	}
 		
 	@Test
@@ -67,6 +55,45 @@ public class Topic_20_Wait_PVII_Fluent {
 	public void afterClass() {
 		driver.quit();
 	}
+public WebElement findElement(By locator) {
+	FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+	.withTimeout(Duration.ofSeconds(sumTime))
+			 .pollingEvery(Duration.ofSeconds(pollingtime))
+			 .ignoring(NoSuchElementException.class);
+	WebElement element = fluentWait.until(new Function<WebDriver, WebElement>() {
+		public WebElement apply(WebDriver driver) {
+			return driver.findElement(locator);
+		}
+	});
+	return element;
+}
+public void clickToElement(By locator) {
+	WebElement element= findElement(locator);
+	element.click();
+}
+public WebElement waitWebElementVisible(By locator) {
+	FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+			.withTimeout(Duration.ofSeconds(sumTime))
+			.pollingEvery(Duration.ofSeconds(pollingtime))
+			.ignoring(NoSuchElementException.class);
+	return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+}
+
+public boolean isElementDisplayed (By locator) {
+	WebElement element = waitWebElementVisible(locator);
+	FluentWait<WebElement> wait = new FluentWait<WebElement>(element)
+			.withTimeout(Duration.ofSeconds(sumTime))
+			.pollingEvery(Duration.ofSeconds(pollingtime))
+			.ignoring(NoSuchElementException.class);
+	boolean isDisplayed = wait.until(new Function<WebElement, Boolean>() {
+		public Boolean apply(WebElement element) {
+			boolean flag = element.isDisplayed();
+			return flag;
+		}
+	});
+	return isDisplayed;
+}
+
 
 	public void sleepInSecond(long second) {
 		try {
@@ -78,4 +105,4 @@ public class Topic_20_Wait_PVII_Fluent {
 	}
 		}
 		
-	
+
