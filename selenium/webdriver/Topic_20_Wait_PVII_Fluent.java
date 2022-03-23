@@ -105,4 +105,3 @@ public boolean isElementDisplayed (By locator) {
 	}
 		}
 		
-
