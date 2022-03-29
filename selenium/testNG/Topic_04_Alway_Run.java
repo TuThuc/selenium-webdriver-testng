@@ -1,0 +1,45 @@
+package testNG;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class Topic_04_Alway_Run {
+	WebDriver driver;
+
+	String projectPath = System.getProperty("user.dir");
+ @BeforeClass(alwaysRun =true)
+ public void initBrower() {
+	 System.err.println("Mo brower");
+	 System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+		driver = new FirefoxDriver();
+ }
+ 
+	@Test(groups= {"user"})
+	public void TC_01_Creat_User() {
+		
+	}
+	@Test(groups= {"user"})
+	public void TC_02_View_User() {
+		
+	}
+	@Test(groups= {"user","admin"})
+	public void TC_03_Edit_User() {
+		
+	}
+	@Test(groups= {"user","admin"})
+	public void TC_04_Delete_User() {
+		
+	}
+ 
+	@AfterClass(alwaysRun =true)
+	 public void closeBrower() {
+		 System.err.println("dong brower");
+		 driver.quit();
+	 }
+	 
+}
